@@ -7,6 +7,7 @@ async function serve(): Promise<void> {
   const app = express();
   const routes = router();
 
+  app.use(express.json());
   app.use(routes);
 
   app.listen(config.port, config.host, () => {
