@@ -1,14 +1,14 @@
 import express from 'express';
 
 import config from './config';
+import { router } from './router';
 
 async function serve(): Promise<void> {
   const app = express();
+  const routes = router();
 
-  app.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
-  
+  app.use(routes);
+
   app.listen(config.port, config.host, () => {
     const { host, port } = config;
     const addrs = `http://${host}:${port}`;
