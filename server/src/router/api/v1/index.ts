@@ -1,12 +1,11 @@
 import { Router } from "express";
 
-import { slot } from "./slot";
+import { auth } from "./auth";
 
 export function v1(): Router {
   const v1Router = Router();
-  const slotRouter = slot();
 
-  v1Router.use("/slots", slotRouter);
+  v1Router.use("/auth", auth());
 
   return v1Router;
 }
