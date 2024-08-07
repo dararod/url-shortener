@@ -49,5 +49,15 @@ export function auth(): Router {
     }
   });
 
+  router.get("/signin", async (req, res, next) => {
+    try {
+      await openMongoDBConn();
+
+      const {email, password} = req.body;
+    } catch(err) {
+
+    }
+  });
+
   return router;
 }
