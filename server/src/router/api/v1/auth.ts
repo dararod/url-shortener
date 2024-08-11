@@ -39,7 +39,7 @@ export function auth(): Router {
         createdAt: document.createdAt,
         updatedAt: document.updatedAt,
       });
-    } catch(err) {
+    } catch (err) {
       // FIXME: This is exposing internal error which is not good for security
       if ((err as MongoError)?.code === DUPLICATED_KEY_ERROR_CODE) {
         return res.status(400).json({ message: (err as MongoError)?.message });
@@ -49,12 +49,26 @@ export function auth(): Router {
     }
   });
 
-  router.get("/signin", async (req, res, next) => {
+  router.post("/signin", async (req, res, next) => {
+    debugger;
     try {
       await openMongoDBConn();
+      const reqBody = req.body;
 
-      const {email, password} = req.body;
-    } catch(err) {
+      const user = await UserModel.findOne({ email: reqBody.email }).exec();
+
+      if (user) {
+        debugger;
+        const validate = await user.verifyPassword(reqBody.password)
+        if (validate) {
+          return res.status(201);
+        }
+        res.status(400).json({ message: "Invalid Credentials" });
+      }
+      debugger;
+      res.status(400).json({ message: "Invalid Credentials" });
+      return;
+    } catch (err) {
 
     }
   });
