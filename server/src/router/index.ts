@@ -4,9 +4,8 @@ import { api } from "./api";
 
 export function router(): Router {
   const applicationRouter = Router();
-  const apiRouter = api();
 
-  applicationRouter.use("/api", apiRouter);
+  applicationRouter.use("/api", api());
 
   return applicationRouter;
 }

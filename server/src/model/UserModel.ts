@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { Model, Schema, SchemaTypeOptions, model } from "mongoose";
+import { Model, Schema, model } from "mongoose";
 
 const SALT_ROUNDS = 10;
 
@@ -48,8 +48,8 @@ UserSchema.methods.hashPassword = async function (raw: string): Promise<void> {
   this.passwordHash = hash;
 };
 
-UserSchema.methods.verifyPassword = async function (rawPassword: string, hash: string): Promise<boolean> {
-  return bcrypt.compare(rawPassword, hash);
+UserSchema.methods.verifyPassword = async function (rawPassword: string): Promise<boolean> {
+  return bcrypt.compare(rawPassword, this.passwordHash);
 };
 
 export const UserModel = model("User", UserSchema);
