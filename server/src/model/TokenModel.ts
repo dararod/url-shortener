@@ -1,7 +1,4 @@
-import bcrypt from 'bcrypt';
 import { Model, Schema, model } from "mongoose";
-
-const SALT_ROUNDS = 10;
 
 interface IModel {
   sessionToken: string;
@@ -12,8 +9,25 @@ interface IModel {
 
 type TokenModel = Model<IModel, {}>;
 
-const UserSchema = new Schema<IModel, TokenModel>({
-
+const TokenSchema = new Schema<IModel, TokenModel>({
+    sessionToken: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    userId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+    },
+    updatedAt: {
+        type: Date,
+        required: true,
+    },
 });
 
-export const UserModel = model("User", UserSchema);
+export const TokenModel = model("Token", TokenSchema);
