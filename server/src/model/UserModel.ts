@@ -14,6 +14,7 @@ interface IUser {
 
 interface IUserMethods {
   hashPassword(raw: string): Promise<void>;
+  verifyPassword(raw: string): Promise<boolean>;
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>;
@@ -48,8 +49,8 @@ UserSchema.methods.hashPassword = async function (raw: string): Promise<void> {
   this.passwordHash = hash;
 };
 
-UserSchema.methods.verifyPassword = async function (rawPassword: string): Promise<boolean> {
-  return bcrypt.compare(rawPassword, this.passwordHash);
+UserSchema.methods.verifyPassword = async function (raw: string): Promise<boolean> {
+  return bcrypt.compare(raw, this.passwordHash);
 };
 
 export const UserModel = model("User", UserSchema);

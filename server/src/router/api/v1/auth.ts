@@ -58,14 +58,12 @@ export function auth(): Router {
       const user = await UserModel.findOne({ email: reqBody.email }).exec();
 
       if (user) {
-        debugger;
         const validate = await user.verifyPassword(reqBody.password)
         if (validate) {
           return res.status(201);
         }
         res.status(400).json({ message: "Invalid Credentials" });
       }
-      debugger;
       res.status(400).json({ message: "Invalid Credentials" });
       return;
     } catch (err) {
