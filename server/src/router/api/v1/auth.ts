@@ -25,17 +25,21 @@ export function auth(): Router {
         surname: reqBody.surname,
         email: reqBody?.email,
         passwordHash: null,
+        accessToken: null,
         createdAt: Date.now(),
         updatedAt: Date.now(),
-      });
+      }); 
 
       await entry.hashPassword(reqBody.password);
+
+      entry.createAccessToken();
 
       const document = await entry.save();
 
       return res.status(201).json({
         id: document._id,
         email: document.email,
+        accessToken: document.accessToken,
         createdAt: document.createdAt,
         updatedAt: document.updatedAt,
       });
@@ -60,7 +64,9 @@ export function auth(): Router {
       if (user) {
         const validate = await user.verifyPassword(reqBody.password)
         if (validate) {
-          return res.status(201);
+          return res.status(201).json({
+            accessToken: user.accessToken,
+          });
         }
         res.status(400).json({ message: "Invalid Credentials" });
       }
