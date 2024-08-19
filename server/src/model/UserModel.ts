@@ -4,7 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 
 const SALT_ROUNDS = 10;
 
-interface IUser {
+export interface IUser {
   name: string;
   surname: string;
   email: string;

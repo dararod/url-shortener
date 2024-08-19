@@ -3,6 +3,7 @@ import { MongoError } from "mongodb";
 
 import { openMongoDBConn } from "../../../infra/mongo";
 import { UserModel } from "../../../model/UserModel";
+import { verifyToken } from "../../../utils/auth";
 
 const DUPLICATED_KEY_ERROR_CODE = 11000;
 
@@ -54,7 +55,6 @@ export function auth(): Router {
   });
 
   router.post("/signin", async (req, res, next) => {
-    debugger;
     try {
       await openMongoDBConn();
       const reqBody = req.body;
@@ -73,7 +73,16 @@ export function auth(): Router {
       res.status(400).json({ message: "Invalid Credentials" });
       return;
     } catch (err) {
+      res.status(400).json({ message: "Invalid Credentials" });
+    }
+  });
 
+  router.get("/me", async (req, res, next) => {
+    try {
+      const user = await verifyToken(req);
+      return res.status(201).json(user);
+    } catch (err) {
+      res.status(400).json({ message: "Unauthorize" });
     }
   });
 
