@@ -2,11 +2,13 @@ import express from 'express';
 
 import config from './config';
 import { router } from './router';
+import cookieParser from 'cookie-parser';
 
 async function serve(): Promise<void> {
   const app = express();
   const routes = router();
 
+  app.use(cookieParser());
   app.use(express.json());
   app.use(routes);
 
