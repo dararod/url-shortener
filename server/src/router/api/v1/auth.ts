@@ -29,7 +29,7 @@ export function auth(): Router {
         accessToken: null,
         createdAt: Date.now(),
         updatedAt: Date.now(),
-      }); 
+      });
 
       await entry.hashPassword(reqBody.password);
 
@@ -37,7 +37,7 @@ export function auth(): Router {
 
       const document = await entry.save();
 
-      return res.status(201).json({
+      return res.status(200).json({
         id: document._id,
         email: document.email,
         accessToken: document.accessToken,
@@ -54,33 +54,37 @@ export function auth(): Router {
     }
   });
 
-  router.post("/signin", async (req, res, next) => {
+  router.post("/signin", async (req, res) => {
     try {
       await openMongoDBConn();
       const reqBody = req.body;
-
       const user = await UserModel.findOne({ email: reqBody.email }).exec();
 
       if (user) {
         const validate = await user.verifyPassword(reqBody.password)
         if (validate) {
-          return res.status(201).json({
-            accessToken: user.accessToken,
-          });
-        }
+          // Set that the cookie expires in one hour
+
+          const oneDayMs = 86400000;
+          const expires = new Date(Date.now() + oneDayMs)
+          return res.status(201).cookie('accessToken', user.accessToken, { httpOnly: true, expires }).send();
+        };
+
         res.status(400).json({ message: "Invalid Credentials" });
       }
       res.status(400).json({ message: "Invalid Credentials" });
       return;
     } catch (err) {
-      res.status(400).json({ message: "Invalid Credentials" });
+      console.log(err);
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
   });
 
-  router.get("/me", async (req, res, next) => {
+  router.get("/me", async (req, res) => {
     try {
       const user = await verifyToken(req);
-      return res.status(201).json(user);
+      const { passwordHash: password, ...rest } = user._doc
+      return res.status(200).json(rest);
     } catch (err) {
       res.status(400).json({ message: "Unauthorize" });
     }
