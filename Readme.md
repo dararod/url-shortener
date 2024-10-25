@@ -81,7 +81,7 @@ Method | Path | Description | 🔐
 > in the server-side or as database reference.
 
 #### <ins>User</ins>
- 
+
 Property | Data Type | Description | 👁️
 --- | --- | --- | ---
 name | `String` | User's name. | ✅
@@ -94,7 +94,14 @@ updatedAt | `Date` | Date of most recent update. | ✅
 
 #### <ins>Link</ins>
 
-TODO
+Property | Data Type | Description | 👁️
+--- | --- | --- | ---
+fullUrl | `String` | Link's full url | ✅
+shortUrl | `String` | Link's short url | ✅
+slug | `String` | Link's slug | ✅
+createdAt | `Date` | Date of creation. | ✅
+updatedAt | `Date` | Date of most recent update. | ✅
+
 
 #### <ins>Link History Item</ins>
  
