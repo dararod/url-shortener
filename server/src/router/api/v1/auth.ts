@@ -90,5 +90,9 @@ export function auth(): Router {
     }
   });
 
+  router.post("/logout", async (req, res) => {
+      res.clearCookie('accessToken').status(200)
+  });
+
   return router;
 }
