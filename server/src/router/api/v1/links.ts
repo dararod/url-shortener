@@ -6,10 +6,10 @@ import { UrlModel } from "../../../model/URLModel";
 
 const DUPLICATED_KEY_ERROR_CODE = 11000;
 
-export function create(): Router {
+export function links(): Router {
   const router = Router();
 
-  router.post("/link", async (req, res) => {
+  router.post("/create", async (req, res) => {
     try {
       await openMongoDBConn();
 
