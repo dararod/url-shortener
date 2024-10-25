@@ -18,6 +18,7 @@ export function user(): Router {
           $set: {
             name: reqBody.name,
             surname: reqBody.surname,
+            updatedAt: new Date()
           },
         },
         { new: true }
