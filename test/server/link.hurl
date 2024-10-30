@@ -30,3 +30,16 @@ jsonpath "$.fullUrl" == "https://www.twitch.tv/ibai"
 jsonpath "$.shortUrl" == "https://www.twitch.tv/1"
 jsonpath "$.createdAt" exists
 jsonpath "$.updatedAt" exists
+
+[Captures]
+link-id: jsonpath "$._id"
+
+GET http://localhost:3000/api/v1/links/{{link-id}}
+
+HTTP 200
+
+[Asserts]
+jsonpath "$.fullUrl" == "https://www.twitch.tv/ibai"
+jsonpath "$.shortUrl" == "https://www.twitch.tv/1"
+jsonpath "$.createdAt" exists
+jsonpath "$.updatedAt" exists

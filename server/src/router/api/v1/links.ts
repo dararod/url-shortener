@@ -1,4 +1,4 @@
-import { Router } from "express";
+import e, { Router } from "express";
 import { MongoError } from "mongodb";
 
 import { openMongoDBConn } from "../../../infra/mongo";
@@ -43,6 +43,26 @@ export function links(): Router {
         return res.status(400).json({ message: (err as MongoError)?.message });
       }
 
+      return res.status(500).json({ message: (err as Error).message });
+    }
+  });
+
+  router.get("/:id", async (req, res) => {
+    try {
+      await openMongoDBConn();
+      verifyToken(req);
+      
+      const linkId = req.params.id
+      const link = await UrlModel.findById(
+        linkId
+      ).exec();
+
+      if (!link) {
+        return res.status(400).json({ message: "Link was not found" });
+      }
+      
+      res.status(200).json(link)
+    } catch (err) {
       return res.status(500).json({ message: (err as Error).message });
     }
   });
