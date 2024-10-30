@@ -1,7 +1,9 @@
 # Lists all available recipes
+
 default:
-  just --list
+just --list
 
 # Spins up development containers
+
 dev:
-  docker compose up
+docker compose up -d

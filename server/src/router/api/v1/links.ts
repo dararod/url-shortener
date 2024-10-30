@@ -3,13 +3,14 @@ import { MongoError } from "mongodb";
 
 import { openMongoDBConn } from "../../../infra/mongo";
 import { UrlModel } from "../../../model/URLModel";
+import { verifyToken } from "../../../utils/auth";
 
 const DUPLICATED_KEY_ERROR_CODE = 11000;
 
 export function links(): Router {
   const router = Router();
 
-  router.post("/create", async (req, res) => {
+  router.post("/", async (req, res) => {
     try {
       await openMongoDBConn();
 
@@ -27,10 +28,9 @@ export function links(): Router {
         updatedAt: Date.now(),
       });
 
-
       const document = await entry.save();
 
-      return res.status(200).json({
+      return res.status(201).json({
         id: document._id,
         fullUrl: document.fullUrl,
         shortUrl: document.shortUrl,
@@ -43,6 +43,30 @@ export function links(): Router {
         return res.status(400).json({ message: (err as MongoError)?.message });
       }
 
+      return res.status(500).json({ message: (err as Error).message });
+    }
+  });
+
+  router.put("/:id", async (req, res) => {
+    try {
+      await openMongoDBConn();
+      const reqBody = req.body;
+      verifyToken(req);
+      
+      const updatedLink = await UrlModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            fullUrl: reqBody.fullUrl,
+            shortUrl: reqBody.shortUrl,
+            updatedAt: new Date()
+          }
+        },
+        {new: true}
+      );
+
+      res.status(200).json(updatedLink)
+    } catch (err) {
       return res.status(500).json({ message: (err as Error).message });
     }
   });

@@ -7,7 +7,7 @@ import { verifyToken } from "../../../utils/auth";
 export function user(): Router {
   const router = Router();
 
-  router.put("/update", async (req, res) => {
+  router.put("/", async (req, res) => {
     try {
       await openMongoDBConn();
       const reqBody = req.body;
