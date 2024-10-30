@@ -53,8 +53,9 @@ export function links(): Router {
       const reqBody = req.body;
       verifyToken(req);
       
+      const linkId = req.params.id
       const updatedLink = await UrlModel.findByIdAndUpdate(
-        req.params.id,
+        linkId,
         {
           $set: {
             fullUrl: reqBody.fullUrl,
