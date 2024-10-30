@@ -37,8 +37,10 @@ export function auth(): Router {
 
       const document = await entry.save();
 
-      return res.status(200).json({
+      return res.status(201).json({
         id: document._id,
+        name: document.name,
+        surname: document.surname,
         email: document.email,
         accessToken: document.accessToken,
         createdAt: document.createdAt,
@@ -49,7 +51,7 @@ export function auth(): Router {
       if ((err as MongoError)?.code === DUPLICATED_KEY_ERROR_CODE) {
         return res.status(400).json({ message: (err as MongoError)?.message });
       }
-
+      console.log(err)
       return res.status(500).json({ message: (err as Error).message });
     }
   });
@@ -67,7 +69,7 @@ export function auth(): Router {
 
           const oneDayMs = 86400000;
           const expires = new Date(Date.now() + oneDayMs)
-          return res.status(201).cookie('accessToken', user.accessToken, { httpOnly: true, expires }).send();
+          return res.status(200).cookie('accessToken', user.accessToken, { httpOnly: true, expires }).send();
         };
 
         res.status(400).json({ message: "Invalid Credentials" });
