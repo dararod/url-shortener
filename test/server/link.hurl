@@ -1,3 +1,31 @@
+POST http://localhost:3000/api/v1/auth/signup
+
+{
+    "name": "John",
+    "surname": "Appleseed",
+    "email": "johnappleseed@gmail.com",
+    "password": "Admin!1234"
+}
+
+HTTP 201
+
+[Asserts]
+jsonpath "$.name" == "John"
+jsonpath "$.surname" == "Appleseed"
+jsonpath "$.email" == "johnappleseed@gmail.com"
+
+POST http://localhost:3000/api/v1/auth/signin
+
+{
+    "email": "johnappleseed@gmail.com",
+    "password": "Admin!1234"
+}
+
+HTTP 200
+
+[Asserts]
+cookie "accessToken" exists
+
 POST http://localhost:3000/api/v1/links
 
 {
