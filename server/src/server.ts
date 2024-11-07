@@ -6,7 +6,6 @@ import { router } from './router';
 import cookieParser from 'cookie-parser';
 async function serve(): Promise<void> {
   dotEnv.config();
-  console.log(process.env.DATABASE_URL);
   const app = express();
   const routes = router();
 

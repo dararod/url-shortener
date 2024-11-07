@@ -3,7 +3,8 @@
   "module": "src/server.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --inspect run ./src/server.ts"
+    "dev": "bun --inspect run ./src/server.ts",
+    "db:drop": "bun run ./scripts/drop-database.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
