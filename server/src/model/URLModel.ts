@@ -3,6 +3,8 @@ import { Model, Schema, model } from "mongoose";
 export interface IUrl {
   fullUrl: string;
   shortUrl: string;
+  activatedAt: Date;
+  deactivatedAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +23,14 @@ const UrlSchema = new Schema<IUrl, UrlModel>({
   createdAt: {
     type: Date,
     required: true,
+  },
+  activatedAt: {
+    type: Date,
+    required: true,
+  },
+  deactivatedAt: {
+    type: Date,
+    required: false,
   },
   updatedAt: {
     type: Date,

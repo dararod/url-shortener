@@ -3,7 +3,7 @@ POST http://localhost:3000/api/v1/auth/signup
 {
     "name": "John",
     "surname": "Appleseed",
-    "email": "johnappleseed2@gmail.com",
+    "email": "johnappleseed3@gmail.com",
     "password": "Admin!1234"
 }
 
@@ -12,12 +12,12 @@ HTTP 201
 [Asserts]
 jsonpath "$.name" == "John"
 jsonpath "$.surname" == "Appleseed"
-jsonpath "$.email" == "johnappleseed2@gmail.com"
+jsonpath "$.email" == "johnappleseed3@gmail.com"
 
 POST http://localhost:3000/api/v1/auth/signin
 
 {
-    "email": "johnappleseed2@gmail.com",
+    "email": "johnappleseed3@gmail.com",
     "password": "Admin!1234"
 }
 
@@ -41,4 +41,4 @@ HTTP 200
 [Asserts]
 jsonpath "$.name" == "Ilia"
 jsonpath "$.surname" == "Topuria"
-jsonpath "$.email" == "johnappleseed2@gmail.com"
+jsonpath "$.email" == "johnappleseed3@gmail.com"
