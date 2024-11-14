@@ -26,7 +26,7 @@ export class UserEntity implements IUserEntity {
         this.email = dto.email;
         this.passwordHash = dto.passwordHash;
         this.accessToken= dto.accessToken;
-        this.createdAt = dto.createdAt;        
+        this.createdAt = dto.createdAt;
         this.updatedAt = dto.updatedAt;
     }
 }

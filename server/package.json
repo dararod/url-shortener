@@ -4,17 +4,23 @@
   "type": "module",
   "scripts": {
     "dev": "bun --inspect run ./src/main.ts",
-    "db:drop": "bun run ./scripts/drop-database.ts"
+    "db:drop": "bun run ./scripts/drop-database.ts",
+    "test": "vitest ./tests/**/*.test.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bcrypt": "^5.0.2",
+    "@types/bun": "latest",
+    "vitest": "^2.1.4"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "fastify": "^5.1.0",
-    "mongodb": "^6.10.0"
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
+    "uuid": "^11.0.3"
   }
 }
