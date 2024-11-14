@@ -1,7 +1,8 @@
-import { openMongoDBConn } from '../src/infra/mongo'
+import { makeDatabaseConn } from '../src/infra/repository'
+import { DATABASE_URL } from '../tests/constants';
 
 async function dropDatabase() {
-    const conn = await openMongoDBConn();
+    const conn = await makeDatabaseConn(DATABASE_URL);
 
     try {
         await conn.connection.dropDatabase();
