@@ -18,7 +18,7 @@ drop_database:
     cd ./server && DATABASE_URL="mongodb://localhost:27018/mern-url-shortener" bun run db:drop
 
 e2e_test: drop_database
-    cd ./test/server
-    hurl -v ./test/server/auth.hurl
-    hurl -v ./test/server/link.hurl
-    hurl -v ./test/server/user.hurl
+    cd ./server/tests/e2e/
+    hurl -v ./server/tests/e2e/auth.hurl
+    hurl -v ./server/tests/e2e/link.hurl
+    hurl -v ./server/tests/e2e/user.hurl
