@@ -3,6 +3,7 @@ import { LinkEntity } from "./LinkEntity";
 import type { Id } from "../../infra/Id";
 import type { ILinkEntity } from "./LinkEntity";
 import type { LinkRepository } from "./LinkRepository";
+import { LinkNotFoundError } from "./errors/LinkNotFoundError";
 
 export type CreateLinkDto = Omit<
   ILinkEntity,
@@ -63,7 +64,7 @@ export class LinkService {
       return await this.getById(id) as LinkEntity;
     }
     
-    throw new Error('The link was not found with that id')
+    throw new LinkNotFoundError()
   }
 
   async activate(id: Id): Promise<LinkEntity | null> {
@@ -77,6 +78,6 @@ export class LinkService {
       return await this.getById(id) as LinkEntity;
     }
     
-    throw new Error('The link was not found with that id')
+    throw new LinkNotFoundError()
   }
 }
