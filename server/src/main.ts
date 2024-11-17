@@ -6,7 +6,7 @@ async function main(): Promise<void> {
     config();
 
     const server = new Server();
-
+    await server.bootstrap();
     await server.run();
 }
 
