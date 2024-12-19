@@ -11,8 +11,7 @@ URL Shortener Server.
 ### Development
 
 1. Run `just dev` to start Docker Services
-2. Change directories to `./server` using `cd ./server`
-3. Run the HTTP Server using `bun run dev`
+2. Run the HTTP Server using `just server`
 
 ## Spec
 
@@ -104,9 +103,9 @@ updatedAt | `Date` | Date of most recent update. | ✅
 
 
 #### <ins>Link History Item</ins>
- 
+
 TODO
- 
+
 ## License
 
 MIT Licensed &copy; David Alejandro Rodríguez 2024

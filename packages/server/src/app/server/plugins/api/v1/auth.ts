@@ -1,5 +1,3 @@
-import fp from 'fastify-plugin';
-
 import type { FastifyInstance, FastifyPluginCallback } from "fastify";
 import type { RegisterUserDto } from "../../../../../domain/user/UserService";
 
