@@ -2,20 +2,20 @@
 
 default:
     just --list
- 
+
 # Spins up development containers
 
 dev:
     docker compose up -d
 
-dev_server:
-    cd ./server && bun run dev
+server:
+    bun run --filter server dev
 
-dev_test_server:
-    cd ./server && DATABASE_URL="mongodb://localhost:27018/mern-url-shortener" bun run dev
+test_server:
+    DATABASE_URL="mongodb://localhost:27018/mern-url-shortener" bun run --filter server dev
 
 drop_database:
-    cd ./server && DATABASE_URL="mongodb://localhost:27018/mern-url-shortener" bun run db:drop
+    DATABASE_URL="mongodb://localhost:27018/mern-url-shortener" bun run --filter server db:drop
 
 e2e_test: drop_database
     cd ./server/tests/e2e/
