@@ -22,13 +22,14 @@ export class Repository<T> implements IRepository<T> {
       await coll.deleteOne(id);
     }
 
-    async find(query: Partial<T>): Promise<T | null> {
-        throw new Error("Method not implemented.");
+    async findOne(query: Partial<T>): Promise<T | null> {
+      const coll = this.db.connection.collection(this.collectionName);
+      return await coll.findOne(query) as T;
     }
 
     async findById(id: Id): Promise<T | null> {
       const coll = this.db.connection.collection(this.collectionName);
-      return await coll.findOne(id) as T;
+      return await coll.findOne({ _id: id }) as T;
     }
 
     async list(query: Partial<T>): Promise<T[]> {
@@ -37,6 +38,11 @@ export class Repository<T> implements IRepository<T> {
 
     async update(id: Id, data: Partial<T>): Promise<void> {
       const coll = this.db.connection.collection(this.collectionName);
+
+      if ('_id' in data) {
+        delete data._id;
+      }
+
       await coll.updateOne({ id }, { $set: data });
     }
 }
