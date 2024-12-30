@@ -53,6 +53,12 @@ export class UserService {
     return this.userRepository.findById(id);
   }
 
+  async getByEmail(email: string): Promise<UserEntity | null> {
+    return this.userRepository.findOne({
+      email,
+    });
+  }
+
   async updateUserDetails(id: Id, dto: Partial<IUserEntity>): Promise<UserEntity> {
     const { name, surname } = dto;
 
@@ -81,7 +87,11 @@ export class UserService {
     return accessToken;
   }
 
-  verifyAccessToken(userEntity: IUserEntity, accessToken: string): boolean {
-    return userEntity.accessToken === accessToken;
+  async getByAccessToken(accessToken: string): Promise<UserEntity | null> {
+    if (!accessToken) {
+      return null;
+    }
+
+    return await this.userRepository.findOne({ accessToken });
   }
 }
