@@ -1,9 +1,9 @@
 import { LinkEntity } from "./LinkEntity";
+import { LinkNotFoundError } from "./errors/LinkNotFoundError";
 
 import type { Id } from "../../infra/Id";
 import type { ILinkEntity } from "./LinkEntity";
 import type { LinkRepository } from "./LinkRepository";
-import { LinkNotFoundError } from "./errors/LinkNotFoundError";
 
 export type CreateLinkDto = Omit<
   ILinkEntity,
@@ -31,6 +31,7 @@ export class LinkService {
       fullUrl: dto.fullUrl,
       slug: dto.slug,
       activated: true,
+      userId: dto.userId,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -43,11 +44,12 @@ export class LinkService {
   }
 
   async updateLinkDetails(id: Id, dto: Partial<ILinkEntity>): Promise<LinkEntity> {
-    const { fullUrl, slug } = dto;
+    const { fullUrl, slug, activated } = dto;
 
     await this.linkRepository.update(id, {
       fullUrl,
       slug,
+      activated
     });
 
     return await this.getById(id) as LinkEntity;

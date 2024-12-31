@@ -5,12 +5,13 @@ import { apiV1UserRouterPlugin } from './user';
 
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type { Services } from '../../../../services';
+import { apiV1LinkRouterPlugin } from './link';
 
 export const makeAuthHook = (services: Services) => async (request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply | void> => {
   const auth = request.headers.authorization;
 
   if (!auth) {
-    return reply.status(401).send({ message: 'Unauthorized' });;
+    return reply.status(401).send({ message: 'Unauthorized' });
   }
 
   const [scheme, accessToken] = auth.split(' ');
@@ -39,6 +40,10 @@ export const apiV1RouterPlugin = fp((
   fastify.register(apiV1UserRouterPlugin, {
     prefix: '/api/v1/user',
   });
+
+  fastify.register(apiV1LinkRouterPlugin, {
+    prefix: '/api/v1/links',
+  })
 
   done();
 }, {
