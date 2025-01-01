@@ -12,6 +12,7 @@ URL Shortener Server.
 
 1. Run `just dev` to start Docker Services
 2. Run the HTTP Server using `just server`
+3. Run the Front-End using `just client` in a separate terminal
 
 ## Spec
 

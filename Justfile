@@ -8,6 +8,12 @@ default:
 dev:
     docker compose up -d
 
+undev:
+    docker compose down
+
+client:
+    bun run --filter client dev
+
 server:
     bun run --filter server dev
 

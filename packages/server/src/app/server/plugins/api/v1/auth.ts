@@ -1,5 +1,6 @@
 import type { FastifyInstance, FastifyPluginCallback } from "fastify";
 import type { RegisterUserDto } from "../../../../../domain/user/UserService";
+import { MongoError } from "mongodb";
 
 export type SignInRequestBody = {
   email: string;
@@ -45,6 +46,12 @@ export const apiV1AuthRouterPlugin: FastifyPluginCallback = (
         updatedAt: user.updatedAt,
       });
     } catch (err) {
+      if (err instanceof MongoError) {
+        if (err.code === 11000) {
+          return reply.status(400).send({ message: "Email already exists" });
+        }
+      }
+
       return reply.status(500).send({ message: (err as Error).message });
     }
   });
