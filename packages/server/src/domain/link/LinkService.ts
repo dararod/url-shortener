@@ -39,8 +39,8 @@ export class LinkService {
     return this.linkRepository.findById(linkId);
   }
 
-  async getById(id: Id): Promise<LinkEntity | null> {
-    return this.linkRepository.findById(id);
+  async getBySlug(slug: string): Promise<LinkEntity | null> {
+    return this.linkRepository.findOne({ slug });
   }
 
   async updateLinkDetails(id: Id, dto: Partial<ILinkEntity>): Promise<LinkEntity> {
@@ -52,34 +52,6 @@ export class LinkService {
       activated
     });
 
-    return await this.getById(id) as LinkEntity;
-  }
-
-  async deactivate(id: Id): Promise<LinkEntity | null> {
-    const link = await this.getById(id);
-
-    if (link) {
-      await this.linkRepository.update(id, {
-        activated: false
-      })
-
-      return await this.getById(id) as LinkEntity;
-    }
-    
-    throw new LinkNotFoundError()
-  }
-
-  async activate(id: Id): Promise<LinkEntity | null> {
-    const link = await this.getById(id);
-
-    if (link) {
-      await this.linkRepository.update(id, {
-        activated: true
-      })
-
-      return await this.getById(id) as LinkEntity;
-    }
-    
-    throw new LinkNotFoundError()
+    return await this.linkRepository.findById(id) as LinkEntity;
   }
 }

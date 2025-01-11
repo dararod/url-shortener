@@ -2,6 +2,7 @@ import type { IApplicationEntity } from "../../infra/IApplicationEntity";
 import type { Id } from "../../infra/Id";
 
 export interface IUserEntity extends IApplicationEntity {
+    _id?: Id;
     name: string;
     surname: string;
     email: string;
@@ -20,7 +21,12 @@ export class UserEntity implements IUserEntity {
     public readonly updatedAt: Date;
 
     constructor(dto: IUserEntity) {
-        this.id = dto.id;
+        if (dto._id) {
+           this.id = dto._id;
+        } else {
+           this.id = dto.id;
+        }
+
         this.name = dto.name;
         this.surname = dto.surname;
         this.email = dto.email;
